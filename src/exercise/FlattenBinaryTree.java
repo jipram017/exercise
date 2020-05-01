@@ -41,8 +41,8 @@ public class FlattenBinaryTree {
 	}
     
     // This approach does not use additional data structure
-    private static TreeNode prev = null;
-    public static void flatten2(TreeNode root) {
+    private TreeNode prev = null;
+    public void flatten2(TreeNode root) {
     	if(root == null) {
     		return;
     	}
