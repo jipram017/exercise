@@ -18,27 +18,27 @@ public class BalancedBST {
 	}
 	
 	public static TreeNode balanceBST(TreeNode root) {
-		List<Integer> nodeValues = new ArrayList<Integer>();
-		inOrderTraversal(nodeValues, root);
-		return sortedArrayToBST(nodeValues);
+		List<TreeNode> nodes = new ArrayList<TreeNode>();
+		storeInOrder(nodes, root);
+		return sortedArrayListToBST(nodes, 0, nodes.size()-1);
 	}
 	
-	public static TreeNode sortedArrayToBST(List<Integer> nums) {
-		if(nums == null || nums.size() == 0) return null;
-		int middleIdx = nums.size() / 2;
-		TreeNode newNode = new TreeNode(nums.get(middleIdx));
-		newNode.left = sortedArrayToBST(nums.subList(0, middleIdx));
-		newNode.right = sortedArrayToBST(nums.subList(middleIdx+1, nums.size()));
-		return newNode;
+	public static TreeNode sortedArrayListToBST(List<TreeNode> nums, int start, int end) {
+		if(start > end) return null;
+		int middleIdx = (start + end)/ 2;
+		TreeNode node = nums.get(middleIdx);
+		node.left = sortedArrayListToBST(nums, start, middleIdx-1);
+		node.right = sortedArrayListToBST(nums, middleIdx+1, end);
+		return node;
 	}
 	
-	public static void inOrderTraversal(List<Integer> nodeValues, TreeNode root) {
+	public static void storeInOrder(List<TreeNode> nodes, TreeNode root) {
 		if(root == null) {
 			return;
 		}		
-		inOrderTraversal(nodeValues, root.left);
-		nodeValues.add(root.val);
-		inOrderTraversal(nodeValues, root.right);
+		storeInOrder(nodes, root.left);
+		nodes.add(root);
+		storeInOrder(nodes, root.right);
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
