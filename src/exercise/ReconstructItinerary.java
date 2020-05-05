@@ -2,50 +2,32 @@ package exercise;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
 
-public class ReconstructItinerary {
-
+public class ReconstructItinerary{
+	static Map<String, PriorityQueue<String>> airports = new HashMap<String, PriorityQueue<String>>();
+	static LinkedList<String> result = new LinkedList<String>();
+	
     public static List<String> findItinerary(List<List<String>> tickets) {
-    	Map<String, List<String>> airports = new HashMap<String, List<String>>();
-        for(List<String> route : tickets) {
-        	if(airports.containsKey(route.get(0))){
-        		List<String> destinationAirports = airports.get(route.get(0));
-        		destinationAirports.add(route.get(1));
-        	} else {
-        		List<String> destinationAirports = new ArrayList<String>();
-            	destinationAirports.add(route.get(1));
-            	airports.put(route.get(0), destinationAirports);
-        	}
-        }
-        
-		for (List<String> destinationAirport : airports.values()) {
-			Collections.sort(destinationAirport);
-		}
-        List<String> itineraryList = new ArrayList<String>();
-        dfsTraverseAirportNode("JFK",airports,itineraryList);
-        Collections.reverse(itineraryList);
-        return itineraryList;
+    	for(List<String> ticket : tickets) {
+    		airports.putIfAbsent(ticket.get(0), new PriorityQueue<String>());
+    		airports.get(ticket.get(0)).offer(ticket.get(1));
+    	}
+    	
+    	dfs("JFK");
+    	return result;
     }
     
-    public static void dfsTraverseAirportNode(String startingAirport, Map<String, List<String>> airports,
-    		                                  List<String> itineraryList) {
-    	
-    	if(airports.get(startingAirport) == null) {
-    		itineraryList.add(startingAirport);
-    		return;
+    public static void dfs(String airport) {
+    	PriorityQueue<String> destination = airports.get(airport);
+    	while(destination != null && !destination.isEmpty()) {
+    		dfs(destination.poll());
     	}
-    	itineraryList.add(startingAirport);	
-    	Iterator<String> it = airports.get(startingAirport).iterator();
-    	while(it.hasNext()) {
-    		String dest = it.next();
-    		it.remove();
-    		dfsTraverseAirportNode(dest,airports,itineraryList);
-    	}	
+    	result.addFirst(airport);
     }
     
 	public static void main(String[] args) {
@@ -64,15 +46,15 @@ public class ReconstructItinerary {
 		tickets2.add(Arrays.asList("NRT", "JFK"));
 		//tickets2.add(Arrays.asList("LHR", "SFO"));
 		
-		/*
-		 * List<String> itinerary1 = findItinerary(tickets); for(String it : itinerary1)
-		 * { System.out.print(" " + it); }
-		 */
+		List<String> itinerary1 = findItinerary(tickets);
+		for(String it : itinerary1){
+			System.out.print(" " + it); 
+		}
 		
 		System.out.println();
 		List<String> itinerary2 = findItinerary(tickets2);
-		for(String it : itinerary2) {
-			System.out.print(" " + it);
+		for(String it2 : itinerary2) {
+			System.out.print(" " + it2);
 		}
 	}
 
