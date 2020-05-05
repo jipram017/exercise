@@ -16,6 +16,7 @@ public class AirportConnection {
 		return getMinimumAirportConnections(airportGraph, unreachableAirportNodes, flag, startingAirport);
 	}
 	
+	// O(m+n) time, O(m+n) space where m = size of input airports and n = size of input routes
 	public static Map<String, AirportNode> createAirportGraph(List<String> airports, List<String[]> routes){
 		Map<String, AirportNode> airportGraph = new HashMap<String, AirportNode>();
 		for(String airport : airports) {
@@ -27,6 +28,7 @@ public class AirportConnection {
 		return airportGraph;
 	}
 	
+	// O(m+n) time, O(m) space where m = size of input airports and n = size of input routes 
 	public static List<AirportNode> getUnreachableAirportNodes(ArrayList<String> airports, Map<String, AirportNode> airportGraph, String startingAirport){
 		Map<String, Boolean> visitedAirports = new HashMap<String, Boolean>();
 		dfsTraverseAirportNodes(airportGraph, visitedAirports, startingAirport);
@@ -52,6 +54,7 @@ public class AirportConnection {
 			dfsTraverseAirportNodes(airportGraph, visitedAirports, connection);
 		}
 	}
+	
 	
 	public static void markUnreachableConnections(Map<String, AirportNode> airportGraph, List<AirportNode> unreachableNodes) {
 		for(AirportNode node : unreachableNodes) {
