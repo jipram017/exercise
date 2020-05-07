@@ -3,7 +3,7 @@ package exercise;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Knapsack {
+public class KnapsackProblem {
 	public static List<Integer> knapsackProblem(List<Integer[]> items, int capacity) {
 		int[][] knapsackValues = new int[items.size()+1][capacity+1];
 		for(int i = 1; i <= items.size(); i++) {
