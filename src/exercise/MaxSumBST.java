@@ -1,60 +1,33 @@
 package exercise;
 import exercise.FlattenBinaryTree.TreeNode;
 
-
-// Works only for positive values
 public class MaxSumBST {
-	public static class BinaryTree{
-		int min;
-		int max;
-		boolean isBST;
-		int sum;
-		int currentMax;
-		
-		public BinaryTree() {};
-		public BinaryTree(int min, int max, boolean isBST, int sum, int currentMax) {
-			this.min = min;
-			this.max = max;
-			this.isBST = isBST;
-			this.sum = sum;
-			this.currentMax = currentMax;
-		}
-	}
 	
-	public static int cmax = Integer.MIN_VALUE;
 	public static int maxSumBST(TreeNode root) {
-	    return maxSumBSTHelper(root).currentMax;
+		int[] max = new int[1];
+		maxSumBST(root, max);
+		return max[0];
 	}
 	
-	public static BinaryTree maxSumBSTHelper(TreeNode root) {
-		if(root == null) {
-			return new BinaryTree(Integer.MAX_VALUE, Integer.MIN_VALUE, true, 0, 0);
+	public static int[] maxSumBST(TreeNode root, int[] max) {
+		if (root == null) return null;
+		int[] left = maxSumBST(root.left, max);
+		int[] right = maxSumBST(root.right, max);
+		if(left != null && (left[1] >= root.val || left[3] == 0)){
+			return new int[]{0, -1, Integer.MAX_VALUE, 0};
 		}
-        
-        if(root.left == null && root.right == null) {
-			cmax = Math.max(cmax, root.val);
-			return new BinaryTree(root.val, root.val, true, root.val, cmax);
-		}
-		
-		BinaryTree leftSubtree = maxSumBSTHelper(root.left);
-		BinaryTree rightSubtree = maxSumBSTHelper(root.right);
-
-		BinaryTree curTree = new BinaryTree();
-		if(leftSubtree.max < root.val && rightSubtree.min > root.val &&
-		   leftSubtree.isBST && rightSubtree.isBST) {
-		    curTree.min = Math.min(root.val, Math.min(leftSubtree.min, rightSubtree.min));
-			curTree.max = Math.max(root.val, Math.max(leftSubtree.max, rightSubtree.max));
-			curTree.isBST = true;
-			cmax = Math.max(cmax, leftSubtree.sum + rightSubtree.sum + root.val);
-			curTree.sum = leftSubtree.sum + rightSubtree.sum + root.val;
-            curTree.currentMax = cmax;
-			return curTree;
+		if(right != null && (right[2] <= root.val || right[3] == 0)){
+			return new int[]{0, Integer.MIN_VALUE, Integer.MAX_VALUE, 0};
 		}
 		
-		curTree.isBST = false;
-		curTree.currentMax = cmax;
-		curTree.sum = root.val + leftSubtree.sum + rightSubtree.sum;
-		return curTree;
+		int leftSum = left == null ? 0 : left[0];
+		int rightSum = right == null ? 0 : right[0];
+		int sum = leftSum + rightSum + root.val;
+		max[0] = Math.max(max[0], sum);
+		
+		int maxVal = right == null ? root.val : right[2];
+		int minVal = left == null ? root.val : left[1];
+		return new int[] {sum, maxVal, minVal, 1};
 	}
 	
 	public static void main(String[] args) {
