@@ -1,6 +1,9 @@
 package exercise;
 
+import java.util.Arrays;
+
 public class SortingAlgorithm {
+	// Time complexity O(N^N), space complexity O(1)
 	public static int[] bubbleSort(int[] nums) {
 		boolean isSorted = false;
 		int counter = 0;
@@ -17,6 +20,7 @@ public class SortingAlgorithm {
 		return nums;
 	}
 	
+	// Time complexity O(N^N), space complexity O(1)
 	public static int[] insertionSort(int[] nums) {
 		for(int i = 1; i < nums.length; i++) {
 			int j = i;
@@ -30,6 +34,7 @@ public class SortingAlgorithm {
 		return nums;
 	}
 	
+	// Time complexity O(N^N), space complexity O(1)
 	public static int[] selectionSort(int[] nums) {
 		int currentIdx = 0;
 		while(currentIdx < nums.length-1) {
@@ -45,6 +50,7 @@ public class SortingAlgorithm {
 		return nums;
 	}
 	
+	// Time complexity O(N log(N)), space complexity O(log N)
 	public static int[] quickSort(int[] nums) {
 		quickSortHelper(nums, 0, nums.length-1);
 		return nums;
@@ -63,7 +69,6 @@ public class SortingAlgorithm {
 			}
 		}
 		
-		
 	    int temp = nums[low+1];
 	    nums[low+1] = pivot;
 	    nums[end] = temp;
@@ -76,24 +81,7 @@ public class SortingAlgorithm {
 	    }
 	}
 	
-	public static int partition(int[] nums, int start, int end) {
-		int pivot = nums[end];
-		
-		for(int i = start; i < end; i++) {
-			if(nums[i] < pivot) {
-                int temp= nums[start];
-                nums[start]=nums[i];
-                nums[i]=temp;
-				start++;
-			}
-		}
-		
-	    int temp = nums[start];
-	    nums[start] = pivot;
-	    nums[end] = temp;
-		return start;
-	}
-	
+	// Time complexity O(N), space complexity O(1)
 	public static void heapSort(int[] array) {
 		MaxHeap.buildMaxHeap(array);
 		int j = array.length-1;
@@ -101,6 +89,43 @@ public class SortingAlgorithm {
 			swap(0, j, array);
 			MaxHeap.siftDown(0, --j, array);
 		}
+	}
+	
+	
+	// Time complexity O(N log(N)), space complexity O(N log(N)) where N = input array size
+	public static int[] mergeSort(int[] array) {
+		if(array.length == 1) return array;
+		int middleIdx = array.length/2;
+		int[] leftArray = Arrays.copyOfRange(array, 0, middleIdx);
+		int[] rightArray = Arrays.copyOfRange(array, middleIdx, array.length);
+		
+		return doMerge(mergeSort(leftArray), mergeSort(rightArray));
+	}
+	
+	public static int[] doMerge(int[] left, int[]right) {
+		int[] result = new int[left.length + right.length];
+		int i = 0, j = 0, k = 0;
+		while(i < left.length && j < right.length) {
+			if(left[i] <= right[j]) {
+				result[k] = left[i];
+				i++;
+			} else {
+				result[k] = right[j];
+				j++;
+			}
+			k++;
+		}
+		
+		while(i < left.length) {
+			result[k] = left[i];
+			i++; k++;
+		}
+		while(j < right.length) {
+			result[k] = right[j];
+			j++; k++;
+		}
+		
+		return result;
 	}
 	
 	public static void swap(int x, int y, int[] nums) {
@@ -111,8 +136,8 @@ public class SortingAlgorithm {
 	
 	public static void main(String[] args) {
 		int[] nums = new int[] {8,5,2,9,5,6,3};
-		heapSort(nums);
-		for(int num : nums) {
+		int[] result = mergeSort(nums);
+		for(int num : result) {
 			System.out.print(" " + num);
 		}
 	}
