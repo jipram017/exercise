@@ -91,7 +91,6 @@ public class SortingAlgorithm {
 		}
 	}
 	
-	
 	// Time complexity O(N log(N)), space complexity O(N log(N)) where N = input array size
 	public static int[] mergeSort(int[] array) {
 		if(array.length == 1) return array;
