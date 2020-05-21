@@ -12,17 +12,16 @@ public class UglyNumber2 {
         	int multipleThree = result[j] * 3;
         	int multipleFive = result[k] * 5;
         	
-        	int min = Math.min(multipleTwo, Math.min(multipleThree, multipleFive));
-        	result[m] = min;
-        	if(min == multipleTwo) {
+        	result[m] = Math.min(multipleTwo, Math.min(multipleThree, multipleFive));
+        	if(result[m] == multipleTwo) {
         		i++;
         	}
-        	if(min == multipleThree) {
+        	if(result[m] == multipleThree) {
         		j++;
         	} 
-        	if(min == multipleFive) {
+        	if(result[m] == multipleFive) {
         		k++;
-        	}
+        	}   
         }
         
         return result[n-1];
