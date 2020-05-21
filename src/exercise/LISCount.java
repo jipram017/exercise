@@ -2,7 +2,7 @@ package exercise;
 
 import java.util.Arrays;
 
-public class CountLIS {
+public class LISCount {
 
 	// Time complexity O(n^n)
 	// Space complexity O(n)
