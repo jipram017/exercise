@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 // Time O(n^2), Space O(1)
-public class LineMaxPoints {
+public class MaxPointsInline {
     public int maxPoints(int[][] points) {
     	if(points.length == 0 || points == null) return 0;
     	int finalCount = 0;
