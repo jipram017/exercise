@@ -11,6 +11,7 @@ public class LinkedListCycle {
 	     }
 	}
 	
+	// Return true if linked list has cycle, otherwise return false
     public static boolean hasCycle(ListNode head) {
     	if(head == null) return false;
         ListNode p1 = head;
@@ -23,6 +24,7 @@ public class LinkedListCycle {
         return false;
     }
     
+    // Return the node position of starting cycle (if any cycle), otherwise return null
     public static ListNode detectCycle(ListNode head) {
     	if(head == null) return null;
         boolean cycleDetected = false;
@@ -32,7 +34,8 @@ public class LinkedListCycle {
         	p1 = p1.next;
         	p2 = p2.next.next;
             if(p1 == p2){
-                cycleDetected = true; break;
+                cycleDetected = true;
+                break;
             }
         }
         
