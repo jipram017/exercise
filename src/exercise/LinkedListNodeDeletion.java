@@ -3,6 +3,7 @@ package exercise;
 import exercise.LinkedListCycle.ListNode;
 
 public class LinkedListNodeDeletion {
+	// Delete node from a linked list (except tail) given access only to that node
     public static void deleteNode(ListNode node) {
         ListNode nxt = node.next;
         if(nxt != null) {
@@ -11,6 +12,7 @@ public class LinkedListNodeDeletion {
         }
     }
     
+    // Delete node with certain value from linked list
     public static ListNode removeElements(ListNode head, int val) {
         if (head == null) return null;
         ListNode pointer = head;
@@ -19,6 +21,29 @@ public class LinkedListNodeDeletion {
             else pointer = pointer.next;
         }
         return head.val == val ? head.next : head; 
+    }
+    
+    
+    // Remove Nth element from end of linked list
+    public static ListNode removeNthFromEnd(ListNode head, int n) {
+    	if(head == null) return null;
+        ListNode first = head, second = head;
+        for(int i=0; i < n; i++) {
+        	second = second.next;
+        }
+        
+        if(second == null) {
+        	head = head.next;
+        	return head;
+        }
+        
+        while(second.next != null) {
+        	second = second.next;
+        	first = first.next;
+        }
+        
+        first.next = first.next.next;
+        return head;
     }
     
 	public static void main(String[] args) {
