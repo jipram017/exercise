@@ -3,6 +3,7 @@ package exercise;
 import exercise.LinkedListCycle.ListNode;
 
 public class LinkedListNodeDeletion {
+	
 	// Delete node from a linked list (except tail) given access only to that node
     public static void deleteNode(ListNode node) {
         ListNode nxt = node.next;
@@ -12,7 +13,7 @@ public class LinkedListNodeDeletion {
         }
     }
     
-    // Delete node with certain value from linked list
+    // Delete node(s) with certain value from linked list
     public static ListNode removeElements(ListNode head, int val) {
         if (head == null) return null;
         ListNode pointer = head;

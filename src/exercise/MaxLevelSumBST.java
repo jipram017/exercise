@@ -14,7 +14,8 @@ public class MaxLevelSumBST {
         int level = 1; int max  = Integer.MIN_VALUE;
         Map<Integer, Integer> result = new HashMap<>();
         while(!q.isEmpty()) {
-        	int size = q.size(); int currentSum = 0;
+        	int size = q.size();
+        	int currentSum = 0;
         	for(int i = 0; i < size; i++) {
         		TreeNode top = q.poll();
         		currentSum += top.val;
