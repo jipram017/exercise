@@ -8,10 +8,6 @@ public class LCS {
 		char[] array1 = text1.toCharArray();
 		char[] array2 = text2.toCharArray();
 		
-		for (int i = 0; i<text2.length(); i++) {
-            array2[i] = text2.charAt(text2.length()-i);
-		}
-		
 		int[][] LCS = new int[array1.length+1][array2.length+1];
 		String[][] lcs_string = new String[array1.length+1][array2.length+1];
 		for(int i = 0; i <= array1.length; i++) {

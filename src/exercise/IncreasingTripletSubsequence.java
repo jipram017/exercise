@@ -1,6 +1,8 @@
 package exercise;
 
 public class IncreasingTripletSubsequence {
+	
+	// Time complexity O(N), space complexity O(1)
     public static boolean increasingTriplet(int[] nums) {
     	if(nums.length == 0 || nums == null) return false;
         int minVal = Integer.MAX_VALUE;
