@@ -1,6 +1,8 @@
 package exercise;
 
 public class UglyNumber {
+	
+	// Ugly numbers >> numbers divisible by 2, 3 and 5 or other set list of primes
     public static boolean isUgly(int num) {
     	if(num == 0) return false;
     	if(num == 1) return true;
@@ -19,6 +21,7 @@ public class UglyNumber {
     	return false;
     }
     
+    // Time complexity O(N), Space complexity O(N)
     public static int nthUglyNumber(int n) {
     	if(n==0) return 0;
         int i = 0, j = 0, k = 0;
@@ -45,6 +48,7 @@ public class UglyNumber {
         return result[n-1];
     }
     
+    // Time complexity O(N), Space complexity O(N)
     public static int nthSuperUglyNumber(int n, int[] primes) {
         if(n == 0 || primes ==  null || primes.length == 0) return 0;
         int[] times = new int[primes.length];
