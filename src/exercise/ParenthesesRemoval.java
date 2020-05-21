@@ -2,8 +2,8 @@ package exercise;
 
 import java.util.Stack;
 
-public class MinimumParenthesesRemoval {
-	// Using StringBuilder Only
+public class ParenthesesRemoval {
+	// Using two StringBuilders
     public static String minRemoveToMakeValid2(String s) {
     	if(s.isEmpty()) return s;
     	StringBuilder builder = new StringBuilder();
@@ -25,7 +25,7 @@ public class MinimumParenthesesRemoval {
         return result.reverse().toString();
     }
     
-    // Using stack and string builder
+    // Using stack and a string builder
     public static String minRemoveToMakeValid(String s) {
     	  StringBuilder sb = new StringBuilder(s);
     	  Stack<Integer> st = new Stack<>();
