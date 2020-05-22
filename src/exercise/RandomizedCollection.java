@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Random;
 
+//Time complexity O(1)
 class RandomizedCollection {
 	Map<Integer, HashSet<Integer>> valueMap = null;
 	Map<Integer, Integer> indexMap = null;

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+//Time complexity O(1)
 public class RandomizedSet {
 	
 	// We will use two hash maps 

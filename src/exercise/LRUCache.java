@@ -3,6 +3,7 @@ package exercise;
 import java.util.HashMap;
 import java.util.Map;
 
+//Time complexity O(1)
 public class LRUCache {
 	
 	class Node {
@@ -87,12 +88,12 @@ public class LRUCache {
 			 dl.removeNode(node);
 			 dl.putAtFront(node);
 		 } else {
-			 Node newNode = new Node(key, value);
 		     if (cache.size() == capacity) {
 		    	 Node last = cache.get(dl.getLastNode().key);
 		    	 dl.removeNode(last);
 			     cache.remove(last.key);
 		     }
+		     Node newNode = new Node(key, value);
 		     dl.putAtFront(newNode);
 		     cache.put(key, newNode);
 		 }
