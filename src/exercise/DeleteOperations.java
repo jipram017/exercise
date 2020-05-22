@@ -1,6 +1,6 @@
 package exercise;
 
-public class MinimumDistance {
+public class DeleteOperations {
 	
 	public static int minDistance(String word1, String word2) {
 		char[] array1 = word1.toCharArray();

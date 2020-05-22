@@ -8,7 +8,7 @@ public class KnapsackProblem {
 		int[][] knapsackValues = new int[items.size()+1][capacity+1];
 		for(int i = 1; i <= items.size(); i++) {
 			for(int w = 0; w <= capacity; w++) {
-				if(i == 0 || w == 0) {
+				if(w == 0) {
 					knapsackValues[i][w] = 0;
 				}
 				else {
