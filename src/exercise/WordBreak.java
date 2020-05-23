@@ -70,7 +70,7 @@ public class WordBreak {
         	}
         }
         
-        return pos[s.length() + 1];
+        return pos[s.length()];
     }
     
     public static void main(String[] args) {
