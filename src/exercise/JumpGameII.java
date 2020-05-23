@@ -5,19 +5,16 @@ public class JumpGameII {
 	//Space complexity: O(n)
 	public static int minimumJump(int[] nums) {
 		if(nums.length <= 1) return 0;
-		
-		int maxReach = nums[0], steps = nums[0], jump = 0;
+		int next = nums[0], maxReach = nums[0], jump = 1;
 		for(int i = 0; i < nums.length; i++) {
-			if(i == nums.length-1) break;
 			maxReach = Math.max(maxReach, i+nums[i]);
-			steps--;
-			if(steps == 0) {
-				if(i >= maxReach) return -1;
+			if(i == next && i != nums.length - 1) {
+				next = maxReach;
+				if(next == i) return -1;
 				jump++;
-				steps = maxReach-i;
 			}
 		}
-		return jump+1;
+		return jump;
 	}
 	
 	public static void main(String[] args) {
