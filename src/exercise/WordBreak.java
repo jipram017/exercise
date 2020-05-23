@@ -52,6 +52,27 @@ public class WordBreak {
         return wordBreak(buildTrie(wordDict), s, new boolean[s.length()+1]);
     }
     
+    public static boolean wordBreak2(String s, List<String> wordDict) {
+        if(s == null || s.length() == 0) return true;
+        if(wordDict.isEmpty()) return false;
+        boolean[] pos = new boolean[s.length()+1];
+        Arrays.fill(pos, false);
+        pos[0] = true;
+        
+        for(int i = 0; i < s.length(); i++) {
+        	if(pos[i]) {
+        		for(int j = i+1; j <= s.length(); j++) {
+        			String sub = s.substring(i,j);
+        			if(wordDict.contains(sub)) {
+        				pos[j] = true;
+        			}
+        		}
+        	}
+        }
+        
+        return pos[s.length() + 1];
+    }
+    
     public static void main(String[] args) {
     	String s = "leetcode";
     	String[] wordDict = new String[] {"leet", "code"};
