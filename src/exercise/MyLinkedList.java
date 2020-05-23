@@ -3,8 +3,7 @@ package exercise;
 public class MyLinkedList {
 	class Node {
 		int value;
-		Node prev;
-		Node next;
+		Node prev, next;
 		
 		Node(int val){
 			this.value = val;
@@ -13,9 +12,8 @@ public class MyLinkedList {
 		}
 	}
 	
-	Node head;
-	Node tail;
     /** Initialize your data structure here. */
+	Node head, tail;
     public MyLinkedList() {
     	this.head = null;
     	this.tail = null;
@@ -54,7 +52,7 @@ public class MyLinkedList {
     public void addAtTail(int val) {
     	Node node = new Node(val);
     	if(tail == null) {
-    		head = node; tail = node; return;
+    		addAtHead(val);
     	}
     	addAfter(tail, node);
     }
@@ -79,6 +77,26 @@ public class MyLinkedList {
     	} else if(currentIndex == index){
     		addAtTail(val);
     	} 
+    }
+    
+    /** Add a node at certain index or position in the doubly linked list. */
+    // O(P) time, O(1) space, >> P: Position/Index
+    public void addAtIndex(int index, Node nodeToInsert) {
+    	if(index == 0) {
+    		setHead(nodeToInsert);
+    		return;
+    	}
+    	int currentIndex = 0;
+    	Node node = head;
+    	while(node != null && currentIndex != index) {
+    		node = node.next;
+    		currentIndex++;
+    	}
+    	if(node != null) {
+    		addBefore(node, nodeToInsert);
+    	} else if(currentIndex == index) {
+    		setTail(nodeToInsert);
+    	}
     }
     
     /** Delete the index-th node in the linked list, if the index is valid. */
@@ -118,26 +136,6 @@ public class MyLinkedList {
     		return;
     	}
     	addAfter(tail, node);
-    }
-    
-    /** Add a node at certain index or position in the doubly linked list. */
-    // O(P) time, O(1) space, >> P: Position/Index
-    public void addAtIndex(int index, Node nodeToInsert) {
-    	if(index == 1) {
-    		setHead(nodeToInsert);
-    		return;
-    	}
-    	int currentIndex = 1;
-    	Node node = head;
-    	while(node != null && currentIndex != index) {
-    		node = node.next;
-    		currentIndex++;
-    	}
-    	if(node != null) {
-    		addBefore(node, nodeToInsert);
-    	} else {
-    		setTail(nodeToInsert);
-    	}
     }
     
     /** Add a node before other node. */
