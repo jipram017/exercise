@@ -22,24 +22,38 @@ public class JumpGame {
 	public static boolean canJump2(int[] nums) {
 		if(nums.length <= 1) return true;
 		if(nums[0] == 0) return false;
-		
-		int maxReach = nums[0], steps = nums[0];
-		boolean jumpable = false;
+		int maxReach = nums[0], next = nums[0];
 		for(int i = 0; i < nums.length; i++) {
-			if(i == nums.length-1) return true;
 			maxReach = Math.max(maxReach, i+nums[i]);
-			steps--;
-			if(steps == 0) {
-				if(i >= maxReach) return false;
-				steps = maxReach-i;
+            if(next >= nums.length-1) return true;
+			if(i == next) {
+				next = maxReach;
+				if(next == i) return false;
 			}
 		}
-		return jumpable;
+		return true;
+	}
+	
+	//Time complexity: O(n)
+	//Space complexity: O(n)
+	public static int minimumJump(int[] nums) {
+		if(nums.length <= 1) return 0;
+		int next = nums[0], maxReach = nums[0], jump = 1;
+		for(int i = 0; i < nums.length; i++) {
+			maxReach = Math.max(maxReach, i+nums[i]);
+			if(i == next && i != nums.length - 1) {
+				next = maxReach;
+				if(next == i) return -1;
+				jump++;
+			}
+		}
+		return jump;
 	}
 	
 	public static void main(String[] args) {
 		int[]array1 = {2,3,1,1,4};
 		System.out.println(canJump2(array1));
+		System.out.println(minimumJump(array1));
 	}
 
 }
