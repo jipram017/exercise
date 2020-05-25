@@ -18,7 +18,7 @@ public class PathSum {
     }
     
     
-    /** Determine total number of paths in a tree that the values are summed up to sum **/
+    /** Determine total number of paths in a tree which values are summed up to sum **/
     static int count = 0;
     public static int pathSum(TreeNode root, int sum) {
         if(root == null) return 0;
