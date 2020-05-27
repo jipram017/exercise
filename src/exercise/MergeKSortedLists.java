@@ -6,7 +6,7 @@ import java.util.PriorityQueue;
 import exercise.LinkedListCycle.ListNode;
 
 public class MergeKSortedLists {
-    public ListNode mergeKLists(ListNode[] lists) {
+    public static ListNode mergeKLists(ListNode[] lists) {
         if(lists == null || lists.length == 0) return null;
         PriorityQueue<ListNode> queue = new PriorityQueue<ListNode>(new Comparator<ListNode>() {
         	public int compare(ListNode l1, ListNode l2) {
