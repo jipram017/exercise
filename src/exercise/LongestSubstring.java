@@ -79,6 +79,10 @@ public class LongestSubstring {
     		i++;
     	}
     	
+			if(i!=j) {
+				max = Math.max(max, lengthOfLongestSubstring3(s.substring(j, i), k));
+			}
+    	
     	return max;
     }
     
