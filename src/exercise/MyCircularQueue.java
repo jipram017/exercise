@@ -17,8 +17,6 @@ public class MyCircularQueue {
     public MyCircularQueue(int k) {
     	MyCircularQueue.capacity = k;
     	MyCircularQueue.front = null;
-    	MyCircularQueue.rear = null;
-        MyCircularQueue.counter = 0;
     }
     
     /** Insert an element into the circular queue. Return true if the operation is successful. */
