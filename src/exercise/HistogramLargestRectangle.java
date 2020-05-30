@@ -2,7 +2,7 @@ package exercise;
 
 import java.util.Stack;
 
-public class LargestRectangleInHistogram {
+public class HistogramLargestRectangle {
     public static int largestRectangleArea(int[] heights) {
         if(heights.length == 0) return 0;
         Stack<Integer> stack = new Stack<>();
