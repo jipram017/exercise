@@ -5,6 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SubsetsII {
+	
+	// Time complexity O(2^n * n)
+	// Space complexity O(2^n * n)
     public static List<List<Integer>> subsetsWithDup(int[] nums) {
     	if(nums == null || nums.length == 0) return new ArrayList<List<Integer>>();
         List<List<Integer>> result = new ArrayList<List<Integer>>();
