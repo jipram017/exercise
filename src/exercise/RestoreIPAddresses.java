@@ -3,14 +3,14 @@ package exercise;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RestoreIPAddresses {
+public class RestoreIpAddresses {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
 	}
 	
-	public List<String> restoreIPAddresses(String s) {
+	public List<String> restoreIpAddresses(String s) {
 		List<List<String>> result = new ArrayList<List<String>>();
 		List<String> temp = new ArrayList<String>();
 		dfs(result, temp, 0, s);
