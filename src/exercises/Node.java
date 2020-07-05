@@ -10,4 +10,13 @@ public class Node {
 	         next = null;
 	     }
 	}
+	
+	// Definition of TrieNode.
+	public static class TrieNode {
+		TrieNode[] arr;
+		boolean isLeaf;
+		TrieNode() {
+			arr = new TrieNode[26];
+		}
+	}
 }
