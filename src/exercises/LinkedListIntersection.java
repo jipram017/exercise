@@ -1,6 +1,6 @@
 package exercises;
 
-import exercises.Node.ListNode;
+import helper.DataStructure.ListNode;
 
 public class LinkedListIntersection {
 

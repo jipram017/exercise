@@ -1,6 +1,6 @@
 package exercises;
 
-import exercises.Node.ListNode;
+import helper.DataStructure.ListNode;
 
 public class MergeTwoSortedLists {
     public static ListNode mergeTwoLists(ListNode l1, ListNode l2) {
