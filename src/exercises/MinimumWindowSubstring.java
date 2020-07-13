@@ -44,6 +44,8 @@ public class MinimumWindowSubstring {
         			i++;
         		}
         		
+        		
+        		// Update minimum len
         		if(minLen>j-i+1) {
         			minLen = j-i+1;
         			result = s.substring(i, j+1);
@@ -56,7 +58,6 @@ public class MinimumWindowSubstring {
     
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
 	}
 
 }
