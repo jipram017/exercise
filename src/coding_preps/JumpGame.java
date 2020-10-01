@@ -1,6 +1,6 @@
 package coding_preps;
 
-/** LeetCode #55 & #45**/
+/** LeetCode #55**/
 public class JumpGame {
 	// Time complexity O(N*N) where N is size of the input
 	// Space complexity O(N)
@@ -39,24 +39,6 @@ public class JumpGame {
 		}
 		
 		return true;
-	}
-	
-	// Time complexity O(N) where N is size of the input
-	// Space complexity O(1)
-	public static int jump(int[] nums) {
-        if(nums.length<=1) return 0;
-		int minJump = 1;
-		int next=nums[0], maxReach=nums[0];
-		
-		for(int i=0;i<nums.length; i++) {
-			maxReach = Math.max(maxReach, i+nums[i]);
-			if(i==next && i!=nums.length-1) {
-                next=maxReach;
-				minJump++;
-			}
-		}
-		
-		return minJump;
 	}
 	
 	public static void main(String[] args) {
