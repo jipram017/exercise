@@ -1,7 +1,7 @@
 package coding_preps;
 
 /** LeetCode #42 **/
-public class WaterArea {
+public class TrappingRainWater {
 	// Time complexity O(N)
 	// Space complexity O(N)
 	// where N is length of the input
