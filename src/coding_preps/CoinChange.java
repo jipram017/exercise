@@ -2,6 +2,8 @@ package coding_preps;
 
 import java.util.Arrays;
 
+//Time complexity O(m*n) where m is number of coins and n is amount set
+//Space complexity O(n)
 public class CoinChange {
 	/** LeetCode #322 **/
 	public static int coinChange(int[] coins, int amount) {
