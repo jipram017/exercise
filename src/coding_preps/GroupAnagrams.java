@@ -8,10 +8,10 @@ import java.util.Map;
 
 /** LeetCode #49 **/
 public class GroupAnagrams {
-	// Time complexity O(NKlogK)
+	// Time complexity O(NKlogK) --> since there is a sorting
 	// Space complexity O(NK)
 	// where N is the length of strs and K is max length of a string in strs
-    public static List<List<String>> groupAnagrams(String[] strs) {
+    public static List<List<String>> groupAnagrams2(String[] strs) {
         if(strs==null || strs.length==0) return new ArrayList<List<String>>();
         List<List<String>> result = new ArrayList<List<String>>();
         Map<String, List<String>> map = new HashMap<String, List<String>>();
@@ -34,6 +34,31 @@ public class GroupAnagrams {
         
         result.addAll(map.values());
         return result;
+    }
+    
+	// Time complexity O(NK)
+	// Space complexity O(NK)
+	// where N is the length of strs and K is max length of a string in strs
+    public static List<List<String>> groupAnagrams(String[] strs) {
+    	if(strs==null || strs.length==0) return new ArrayList<List<String>>();
+    	Map<String, List<String>> map = new HashMap<String, List<String>>();
+    	int[] ch = new int[26];
+    	
+    	for(int i=0; i<strs.length; i++) {
+    		Arrays.fill(ch, 0);
+    		for(Character c : strs[i].toCharArray()) {
+    			ch[c-'a']++;
+    		}
+    		StringBuilder sb = new StringBuilder();
+    		for(Integer num : ch) {
+    			sb.append("#").append(num);
+    		}
+    		if(!map.containsKey(sb.toString())) {
+    			map.put(sb.toString(), new ArrayList<String>());
+    		}
+    		map.get(sb.toString()).add(strs[i]);
+    	}
+    	return new ArrayList(map.values());
     }
     
 	public static void main(String[] args) {
