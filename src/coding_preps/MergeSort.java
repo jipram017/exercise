@@ -2,7 +2,7 @@ package coding_preps;
 
 import java.util.Arrays;
 
-public class SortingBasic {
+public class MergeSort {
 
 	/** LeetCode #912 **/
 	/** MergeSort **/
