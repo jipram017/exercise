@@ -2,24 +2,8 @@ package coding_preps;
 
 import helper.DataStructure.ListNode;
 
-public class InsertionSort {
-	// Time complexity O(N^2)
-	// Space complexity O(1)
-	public static int[] sortArray(int[] array) {
-		if(array==null || array.length==0) return array;
-		for(int i=1; i<array.length; i++) {
-			int j = i;
-			while(j>0) {
-				if(array[j-1] > array[j]) {
-					swap(array, j, j-1);
-				}
-				j--;
-			}
-		}
-		return array;
-	}
-	
-	/** LeetCode #147 **/
+/** LeetCode #147 **/
+public class InsertionSortList {
 	// Time complexity O(N^2)
 	// Space complexity O(1)
 	public static ListNode insertionSortList(ListNode head) {
