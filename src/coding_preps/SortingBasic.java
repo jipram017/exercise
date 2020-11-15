@@ -157,6 +157,44 @@ public class SortingBasic {
 		}
 	}
 	
+	// Time complexity O(N+K)
+	// Space complexity O(K)
+	// where N is length of original array and K is max number in original array
+	public static int[] countingSort(int[] nums) {
+		int[] output = new int[nums.length+1];
+		
+		// Find max number
+		int max = Integer.MIN_VALUE;
+		for(int i=0; i<nums.length; i++) {
+			max = Math.max(max, nums[i]);
+		}
+		int[] count = new int[max+1];
+		Arrays.fill(count, 0);
+		
+		// Count element in the original array
+		for(int i=0; i<nums.length; i++) {
+			count[nums[i]]++;
+		}
+		
+		// Store the cumulative sum
+		for(int i=1; i<=max; i++) {
+			count[i] += count[i-1];
+		}
+		
+		// Put the element from original array in the output array
+		for(int i=nums.length-1; i>=0; i--) {
+			output[count[nums[i]]-1] = nums[i];
+			count[nums[i]]--;
+		}
+		
+		// Copy output array to original array
+		for(int i=0; i<nums.length; i++){
+            nums[i] = output[i];
+        }
+		
+		return nums;
+	}
+	
 	private static void swap(int[] array, int i, int j) {
 		int temp = array[i];
 		array[i] = array[j];
