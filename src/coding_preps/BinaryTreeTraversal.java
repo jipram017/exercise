@@ -3,6 +3,7 @@ package coding_preps;
 import java.util.ArrayList;
 import java.util.List;
 
+import exercise.FlattenBinaryTree;
 import helper.DataStructure.TreeNode;
 
 public class BinaryTreeTraversal {
