@@ -2,8 +2,8 @@ name: "update release tag"
 description: "Update release tag in the GitHub repo"
 author: "Aji Pramono"
 inputs:
-  tag_name:
-    description: "Name of the tag to create or update"
+  GITHUB_TOKEN:
+    description: 'GitHub token'
     required: true
 
 runs:
