@@ -1,0 +1,23 @@
+{
+  "name": "exercise",
+  "version": "1.0.0",
+  "description": "My exercise with algorithm and data structure",
+  "main": "index.js",
+  "scripts": {
+    "build": "ncc build src/main.js -o dist",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jipram017/exercise.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jipram017/exercise/issues"
+  },
+  "homepage": "https://github.com/jipram017/exercise#readme",
+  "devDependencies": {
+    "@vercel/ncc": "^0.36.0"
+  }
+}
