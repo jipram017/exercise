@@ -6,7 +6,6 @@ public class LinkedListIntersection {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
 	}
 	
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
