@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class FrogJump {
-	
     // Time complexity O(n), space complexity O(n)
     public boolean canCross(int[] stones) {
   	    if(stones == null || stones.length == 0) return false;
