@@ -88,16 +88,16 @@ function getRepositoryUrl(repository, version) {
 }
 
 async function updateChangelog() {
-    const { data: { sha } } = await octokit.rest.repos.getContent( {
+    const data = await octokit.rest.request( 'GET /repos/{owner}/{repo}/contens/{path}{?ref}', {
         ...context.owner,
         ...context.repo,
         path: changelogFilename
     });
-    console.log(sha)
+    console.log(data)
     let changelog = fs.readFileSync(require.resolve("../CHANGELOG.md"), {encoding: 'utf8'});
     changelog = updateUpperSection(changelog);
     changelog = updateBottomSectionGithub(changelog);
-    await pushUpdatedFile(changelog, sha)
+    await pushUpdatedFile(changelog, data.sha)
 }
 
 function updateUpperSection(changelog) {
