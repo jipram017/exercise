@@ -81,5 +81,4 @@ public class MaxHeap {
 			System.out.print(num + " ");
 		}		
 	}
-
 }
