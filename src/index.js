@@ -1,10 +1,8 @@
 'use strict';
 
-const core = require('@actions/core');
 const github = require('@actions/github');
 const fs = require('fs');
 const date = new Date().toISOString().slice(0, 10);
-const version = process.env.npm_package_version;
 const { Base64 } = require("js-base64");
 const { context = {} } = github;
 const {GITHUB_TOKEN, GITHUB_SHA} = process.env;
@@ -12,115 +10,101 @@ const octokit = github.getOctokit(GITHUB_TOKEN);
 const changelogFilename = 'CHANGELOG.md';
 const changelogAddMessage = 'Added CHANGELOG.md file';
 const changelogUpdateMessage = 'Updated CHANGELOG.md file';
-const init_changelog = core.getInput("init_changelog");
-console.log(init_changelog)
 
 async function run() {
-  /*  if (init_changelog) {
-        console.log("new")
-        newChangelog().then(r => "completed");
-    }
-    else {
-        console.log("update")*/
-        await updateChangelog();
-    //}
-    await createReleaseTag();
-}
+    const pull_request_title = context.payload.title;
+    const regex = /#Release v([A-Za-z0-9]+(\.[A-Za-z0-9]+)+)\./i;
+    const matches =  pull_request_title.match(regex);
+    console.log(matches)
+    const latest_version = matches?.matches[2];
 
-async function createReleaseTag(){
-    const { context = {} } = github;
-    const TAG_NAME = core.getInput("tag_name");
-
-    let ref;
-    try {
-        ref = await octokit.rest.git.getRef({...context.repo, ref: `tags/${TAG_NAME}`});
-    } catch (e) {
-        if (e.status === 404) {}
-        else { throw e;}
-    }
-    if (!ref) {
-        await octokit.rest.git.createRef({...context.repo, ref: `refs/tags/${TAG_NAME}`, sha: GITHUB_SHA});
-    }
-    else {
-        await octokit.rest.git.updateRef({...context.repo, ref: `tags/${TAG_NAME}`, sha: GITHUB_SHA});
-    }
-}
-
-async function pushNewFile(changelog) {
-    const contentEncoded = Base64.encode(changelog);
-    try{
-        const { data } = await octokit.rest.repos.createOrUpdateFileContents({
-            ...context.owner,
-            ...context.repo,
-            path: changelogFilename,
-            message: changelogAddMessage,
-            content: contentEncoded
-        });
-        console.log(data);
-    } catch (err) {
-        console.error(err);
-    }
-}
-
-async function pushUpdatedFile(changelog, sha) {
-    const contentEncoded = Base64.encode(changelog);
-    try {
-        const {data} = await octokit.rest.repos.createOrUpdateFileContents({
-            ...context.owner,
-            ...context.repo,
-            path: changelogFilename,
-            message: changelogUpdateMessage,
-            content: contentEncoded,
-            sha: sha
-        });
-        console.log(data);
-    } catch (err) {
-        console.error(err);
-    }
-}
-
-function getRepositoryUrl(repository, version) {
-    const getGithubUrl = (name) => `https://github.com/${name}/compare/v${version}...HEAD`;
-    let type;
-    let name;
-    [, type, name] = repository.url.match(/^(?:[\w+]+?:\/\/)?(.+)(?:\/|:)([\w-]+\/[\w-]+)(?:\.git)?$/);
-    return getGithubUrl(name);
-}
-
-async function createChangelog() {
-    let changelog = fs.readFileSync(require.resolve("../src/init.md"), {encoding: 'utf8'});
-    const {version, repository} = JSON.parse(fs.readFileSync(require.resolve("../package.json"), {encoding: 'utf8'}));
-    changelog = changelog.replace('[Unreleased]:', `[Unreleased]: ${getRepositoryUrl(repository, version)}`);
-    await pushNewFile(changelog)
-}
-
-async function updateChangelog() {
     const response = await octokit.rest.repos.getContent(  {
         ...context.owner,
         ...context.repo,
         path: changelogFilename
     });
-    console.log(response?.data)
+    console.log(response)
+    const status = response?.status
+    const latest_content = response?.data?.content
     const sha = response?.data?.sha;
-    console.log(response?.data?.sha)
-    const content = response?.data?.content;
-    console.log(response?.data?.content)
+
+    if(status != 200){
+        await createChangelog()
+    }
+    else if(latest_content != null){
+        await updateChangelog(latest_content, latest_version, sha);
+    }
+    await createReleaseTag(latest_version);
+}
+
+async function createChangelog() {
+    let changelog = fs.readFileSync(
+        require.resolve("../src/init.md"),
+        {encoding: 'utf8'}
+    );
+
+    const response = await octokit.rest.repos.getLatestRelease({
+        ...context.owner,
+        ...context.repo
+    });
+    console.log(response)
+    let version = response?.data?.tag_name || 'v1.0.0'
+    const githubUrl = context.repo.concat(`/compare/${version}...HEAD`);
+    console.log(githubUrl)
+    changelog = changelog.replace('[Unreleased]:', `[Unreleased]: ${githubUrl}`);
+    pushNewFile(changelog).then(
+        response => console.log(response)
+    );
+}
+
+async function pushNewFile(changelog) {
+    const contentEncoded = Base64.encode(changelog);
+    const response = octokit.rest.repos.createOrUpdateFileContents({
+        ...context.owner,
+        ...context.repo,
+        path: changelogFilename,
+        message: changelogAddMessage,
+        content: contentEncoded
+    });
+    console.log(response)
+    return response?.status || 500;
+}
+
+async function updateChangelog(content, version, sha) {
     const contentDecoded = Base64.decode(content);
     console.log(contentDecoded)
-
-    //let changelog = fs.readFileSync(require.resolve("../CHANGELOG.md"), {encoding: 'utf8'});
-    let changelog = updateUpperSection(contentDecoded);
-    changelog = updateBottomSectionGithub(changelog);
-    await pushUpdatedFile(changelog, sha);
+    let changelog = updateUpperSection(contentDecoded, version);
+    console.log(changelog)
+    changelog = updateBottomSection(changelog, version);
+    console.log(changelog)
+    pushUpdatedFile(changelog, sha).then(
+        response => console.log(response)
+    );
 }
 
-function updateUpperSection(changelog) {
-    return changelog.replace(/## \[Unreleased\]/, `## [Unreleased]\n\n## [${version}] - ${date}`);
+async function pushUpdatedFile(changelog, sha) {
+    const contentEncoded = Base64.encode(changelog);
+    const response = await octokit.rest.repos.createOrUpdateFileContents({
+        ...context.owner,
+        ...context.repo,
+        path: changelogFilename,
+        message: changelogUpdateMessage,
+        content: contentEncoded,
+        sha: sha
+    });
+    console.log(response)
+    return response?.status || 500;
 }
 
-function updateBottomSectionGithub(changelog) {
+async function updateUpperSection(changelog, version) {
+    changelog = changelog.replace(/## \[Unreleased\]/, `## [Unreleased]\n\n## [${version}] - ${date}`);
+    return changelog;
+}
+
+async function updateBottomSection(changelog, version) {
     const regex = /\[Unreleased\]:(.+\/)v(.+)\.\.\.HEAD/i;
     const matches = changelog.match(regex);
+    console.log(matches)
     if (matches) {
         const url = matches[1];
         const previousVersion = matches[2];
@@ -129,6 +113,26 @@ function updateBottomSectionGithub(changelog) {
         changelog = changelog.replace(regex, `${compareToUnreleased}\n${compareToLatestVersion}`);
     }
     return changelog;
+}
+
+async function createReleaseTag(version){
+    const ref = await octokit.rest.git.getRef(
+        {...context.repo,
+            ref: `tags/${version}`
+        });
+
+    if (!ref) {
+        await octokit.rest.git.createRef(
+            {...context.repo,
+                ref: `refs/tags/${version}`, sha: GITHUB_SHA
+            });
+    }
+    else {
+        await octokit.rest.git.updateRef(
+            {...context.repo,
+                ref: `tags/${version}`, sha: GITHUB_SHA
+            });
+    }
 }
 
 run();
