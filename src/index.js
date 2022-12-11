@@ -40,7 +40,7 @@ async function createReleaseTag(){
 async function pushFile(changelog) {
     try{
         const contentEncoded = Base64.encode(changelog);
-        const { data } = await octokit.repos.createOrUpdateFileContents({
+        const { data } = await octokit.rest.repos.createOrUpdateFileContents({
         owner: 'jipram017',
         repo: 'exercise',
         path: 'CHANGELOG.md',
