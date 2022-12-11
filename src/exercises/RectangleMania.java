@@ -33,5 +33,4 @@ public class RectangleMania {
 		int count = countRectangle(coordinates);
 		System.out.println(count);
 	}
-
 }
