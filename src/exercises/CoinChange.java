@@ -15,7 +15,6 @@ public class CoinChange {
         		}
         	}
         }
-        
         return numCoints[amount] != Integer.MAX_VALUE ? numCoints[amount] : -1;
     }
     
