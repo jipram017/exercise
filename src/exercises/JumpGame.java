@@ -54,6 +54,7 @@ public class JumpGame {
 		int[]array1 = {2,3,1,1,4};
 		System.out.println(canJump2(array1));
 		System.out.println(minimumJump(array1));
+		
 	}
 
 }
