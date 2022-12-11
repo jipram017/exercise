@@ -17,5 +17,4 @@ public class DeleteLeaves {
 		// TODO Auto-generated method stub
 
 	}
-
 }
