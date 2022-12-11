@@ -2,7 +2,7 @@ package exercises;
 
 public class FirstMissingPositive {
 	
-	// Time complexity O(N), space complexity O(1)
+    // Time complexity O(N), space complexity O(1)
     public int firstMissingPositive(int[] nums) {
     	int n = nums.length;
     	if(n==0 || nums==null) return 1;
