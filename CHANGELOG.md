@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 
 ## [v1.0.1] - 2022-12-11
-- Added fix for updating changelog
+- Added fix for updating changelog versioning
 
 [Unreleased]: https://github.com/jipram017/exercise/compare/v1.0.1...HEAD
 [1.0.1]: https://github.com/jipram017/exercise/compare/v1.0.0...v1.0.1
