@@ -8,6 +8,7 @@ import java.util.List;
 // Space complexity O(n)
 public class LIS {
     public static int lengthOfLIS(int[] nums) {
+	    
         if(nums.length == 0 || nums == null) return 0;
         List<Integer> LIS = new ArrayList<>();
         int[] count = new int[nums.length];
