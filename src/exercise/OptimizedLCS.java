@@ -77,5 +77,4 @@ public class OptimizedLCS {
 		String array2 = "GXTXAYB";
 		System.out.println(optimizedLCS(array1, array2));
 	}
-
 }
