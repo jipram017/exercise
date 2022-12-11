@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Set;
 
 public class LongestConsecutiveSequence {
-
 	// Return the longest range
 	// Time complexity O(n), Space complexity O(n)
 	public static int[] longestConsecutive2(int[] nums) {
