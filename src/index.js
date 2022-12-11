@@ -64,8 +64,8 @@ async function pushNewFile(changelog) {
 
 async function pushUpdatedFile(changelog, sha) {
     const contentEncoded = Base64.encode(changelog);
-    try{
-        const { data } = await octokit.rest.repos.createOrUpdateFileContents({
+    try {
+        const {data} = await octokit.rest.repos.createOrUpdateFileContents({
             ...context.owner,
             ...context.repo,
             path: changelogFilename,
@@ -79,13 +79,6 @@ async function pushUpdatedFile(changelog, sha) {
     }
 }
 
-async function newChangelog() {
-    let changelog = fs.readFileSync(require.resolve("../src/init.md"), {encoding: 'utf8'});
-    const {version, repository} = JSON.parse(fs.readFileSync(require.resolve("../package.json"), {encoding: 'utf8'}));
-    changelog = changelog.replace('[Unreleased]:', `[Unreleased]: ${getRepositoryUrl(repository, version)}`);
-    await pushNewFile(changelog)
-}
-
 function getRepositoryUrl(repository, version) {
     const getGithubUrl = (name) => `https://github.com/${name}/compare/v${version}...HEAD`;
     let type;
@@ -94,22 +87,31 @@ function getRepositoryUrl(repository, version) {
     return getGithubUrl(name);
 }
 
+async function createChangelog() {
+    let changelog = fs.readFileSync(require.resolve("../src/init.md"), {encoding: 'utf8'});
+    const {version, repository} = JSON.parse(fs.readFileSync(require.resolve("../package.json"), {encoding: 'utf8'}));
+    changelog = changelog.replace('[Unreleased]:', `[Unreleased]: ${getRepositoryUrl(repository, version)}`);
+    await pushNewFile(changelog)
+}
+
 async function updateChangelog() {
-    const data = await octokit.rest.repos.getContent(  {
+    const response = await octokit.rest.repos.getContent(  {
         ...context.owner,
         ...context.repo,
         path: changelogFilename
     });
+    console.log(response?.data)
+    const sha = response?.data?.sha;
+    console.log(response?.data?.sha)
+    const content = response?.data?.content;
+    console.log(response?.data?.content)
+    const contentDecoded = Base64.decode(content);
+    console.log(contentDecoded)
 
-    var obj=JSON.parse(data,(key,value)=>{
-        if(value=="undefined") return undefined;
-        return value;
-    })
-    console.log(obj);
-    let changelog = fs.readFileSync(require.resolve("../CHANGELOG.md"), {encoding: 'utf8'});
-    changelog = updateUpperSection(changelog);
+    //let changelog = fs.readFileSync(require.resolve("../CHANGELOG.md"), {encoding: 'utf8'});
+    let changelog = updateUpperSection(contentDecoded);
     changelog = updateBottomSectionGithub(changelog);
-    await pushUpdatedFile(changelog, obj.sha);
+    await pushUpdatedFile(changelog, sha);
 }
 
 function updateUpperSection(changelog) {
