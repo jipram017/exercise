@@ -25,5 +25,4 @@ public class BulbSwitcher {
 		// TODO Auto-generated method stub
 
 	}
-
 }
