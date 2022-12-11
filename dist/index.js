@@ -8296,7 +8296,7 @@ async function createChangelog() {
         {encoding: 'utf8'}
     );
 
-    const githubUrl = `https://github.com/${context.repository}/compare/v1.0.0...HEAD`;
+    const githubUrl = `https://github.com/${context.payload.repository.owner}/${context.payload.repository.name}/compare/v1.0.0...HEAD`;
     console.log(githubUrl)
     changelog = changelog.replace('[Unreleased]:', `[Unreleased]: ${githubUrl}`);
     pushNewFile(changelog).then(
@@ -8363,18 +8363,22 @@ async function updateBottomSection(changelog, version) {
 }
 
 async function createReleaseTag(version){
-    const ref = await octokit.rest.git.getRef(
-        {...context.repo,
-            ref: `tags/${version}`
-        });
+    let ref
+    try{
+        ref = await octokit.rest.git.getRef(
+            {...context.repo,
+                ref: `tags/${version}`
+            });
 
-    if (!ref) {
+    } catch(err){
+        console.error(err)
         await octokit.rest.git.createRef(
             {...context.repo,
                 ref: `refs/tags/${version}`, sha: GITHUB_SHA
             });
     }
-    else {
+
+    if(ref) {
         await octokit.rest.git.updateRef(
             {...context.repo,
                 ref: `tags/${version}`, sha: GITHUB_SHA
