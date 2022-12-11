@@ -47,12 +47,12 @@ async function pushFile(changelog) {
             message: "Added CHANGELOG.md file",
             content: contentEncoded,
             committer: {
-                name: context.owner.name,
-                email: context.owner.email,
+                name: "committer",
+                email: "email",
             },
             author: {
-                name: context.owner.name,
-                email: context.owner.email,
+                name: "author",
+                email: "email",
             },
         });
         console.log(data);
