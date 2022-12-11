@@ -6,7 +6,7 @@ import exercise.FlattenBinaryTree.TreeNode;
 
 public class BSTIterator {
 	
-	static Stack<TreeNode> stack = new Stack<TreeNode>();
+    static Stack<TreeNode> stack = new Stack<TreeNode>();
     public BSTIterator(TreeNode root) {
         while(root != null) {
         	stack.push(root);
