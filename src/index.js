@@ -101,21 +101,15 @@ async function updateChangelog() {
         path: changelogFilename
     });
 
-    const modObj = data.map(item => {
-        for (let prop in item) {
-            if(typeof item[prop] === 'object' && !Array.isArray(item[prop])) {
-                item[prop] = JSON.stringify(item[prop])
-            }
-        }
-        return item;
+    var obj=JSON.parse(data,(key,value)=>{
+        if(value=="undefined") return undefined;
+        return value;
     })
-
-    console.log({ modObj })
-
+    console.log(obj);
     let changelog = fs.readFileSync(require.resolve("../CHANGELOG.md"), {encoding: 'utf8'});
     changelog = updateUpperSection(changelog);
     changelog = updateBottomSectionGithub(changelog);
-    await pushUpdatedFile(changelog, modObj.sha);
+    await pushUpdatedFile(changelog, obj.sha);
 }
 
 function updateUpperSection(changelog) {
