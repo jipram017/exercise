@@ -148,7 +148,6 @@ public class AirportConnection {
 				Arrays.asList("BGI", "CDG", "DEL", "DOH", "DSM", "EWR", "EYW", "HND", "ICN",
 						      "JFK", "LGA", "LHR", "ORD", "SAN", "SFO", "SIN", "TLV", "BUD")
 				);
-		
 		String startingAirport = "LGA";
 		int minConnections = minimumAirportConnection(airports, routes, startingAirport, false);
 		System.out.println(minConnections);
