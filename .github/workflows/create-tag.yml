@@ -16,7 +16,7 @@ jobs:
       - name: Create / update release tag
         uses: ./
         with:
-          tag_name: 1.0.0
+          tag_name: 2.0.0
           init_changelog: true
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
