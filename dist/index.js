@@ -8274,7 +8274,9 @@ async function run() {
     const regex = /(\#\s*Release)\s*v(.+)/
     const matches =  pull_request_title.match(regex);
     console.log(matches)
-    const latest_version = matches?.matches[1];
+    let latest_version
+    if(matches) latest_version = matches[2];
+    console.log(latest_version)
 
     const response = await octokit.rest.repos.getContent(  {
         ...context.owner,
