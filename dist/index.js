@@ -10102,7 +10102,7 @@ async function updateChangelog() {
     let changelog = fs.readFileSync(__nccwpck_require__.ab + "CHANGELOG.md", {encoding: 'utf8'});
     changelog = updateUpperSection(changelog);
     changelog = updateBottomSectionGithub(changelog);
-    await pushUpdatedFile(changelog, data.sha)
+    await pushUpdatedFile(changelog, JSON.parse(data).sha);
 }
 
 function updateUpperSection(changelog) {
