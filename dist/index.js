@@ -10007,7 +10007,9 @@ const { Base64 } = __nccwpck_require__(4139);
 const { context = {} } = github;
 const {GITHUB_TOKEN, GITHUB_SHA} = process.env;
 const octokit = github.getOctokit(GITHUB_TOKEN);
-const changelogFilename = '../CHANGELOG.md';
+const changelogFilename = 'CHANGELOG.md';
+const changelogAddMessage = 'Added CHANGELOG.md file';
+const changelogUpdateMessage = 'Updated CHANGELOG.md file';
 
 async function run() {
     const init_changelog = core.getInput("init_changelog");
@@ -10035,23 +10037,32 @@ async function createReleaseTag(){
     }
 }
 
-async function pushFile(changelog) {
-    try {
-        const contentEncoded = Base64.encode(changelog);
-        const {data} = await octokit.rest.repos.createOrUpdateFileContents({
-            owner: context.owner,
-            repo: context.repo,
+async function pushNewFile(changelog) {
+    const contentEncoded = Base64.encode(changelog);
+    try{
+        const { data } = await octokit.rest.repos.createOrUpdateFileContents({
+            ...context.owner,
+            ...context.repo,
             path: changelogFilename,
-            message: "Added CHANGELOG.md file",
+            message: changelogAddMessage,
+            content: contentEncoded
+        });
+        console.log(data);
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+async function pushUpdatedFile(changelog, sha) {
+    const contentEncoded = Base64.encode(changelog);
+    try{
+        const { data } = await octokit.rest.repos.createOrUpdateFileContents({
+            ...context.owner,
+            ...context.repo,
+            path: changelogFilename,
+            message: changelogUpdateMessage,
             content: contentEncoded,
-            committer: {
-                name: context.owner.name,
-                email: context.owner.email,
-            },
-            author: {
-                name: context.owner.name,
-                email: context.owner.email,
-            },
+            sha: sha
         });
         console.log(data);
     } catch (err) {
@@ -10063,8 +10074,7 @@ async function newChangelog() {
     let changelog = fs.readFileSync(__nccwpck_require__.ab + "init.md", {encoding: 'utf8'});
     const {version, repository} = JSON.parse(fs.readFileSync(__nccwpck_require__.ab + "package.json", {encoding: 'utf8'}));
     changelog = changelog.replace('[Unreleased]:', `[Unreleased]: ${getRepositoryUrl(repository, version)}`);
-    await pushFile(changelog)
-    //fs.writeFileSync('../CHANGELOG.md', changelog, {encoding: 'utf8', flag: 'wx'});
+    await pushNewFile(changelog)
 }
 
 function getRepositoryUrl(repository, version) {
@@ -10076,16 +10086,16 @@ function getRepositoryUrl(repository, version) {
 }
 
 async function updateChangelog() {
-    let changelog = fs.readFileSync(require.resolve("../CHANGELOG.md"), { encoding: 'utf8' });
-    console.log(changelog)
+    const data = await octokit.rest.request( 'GET /repos/{owner}/{repo}/contens/{path}{?ref}', {
+        ...context.owner,
+        ...context.repo,
+        path: changelogFilename
+    });
+    console.log(data)
+    let changelog = fs.readFileSync(__nccwpck_require__.ab + "CHANGELOG.md", {encoding: 'utf8'});
     changelog = updateUpperSection(changelog);
-    console.log(changelog)
     changelog = updateBottomSectionGithub(changelog);
-    console.log(changelog)
-    //fs.writeFileSync(require.resolve("../CHANGELOG.md"), changelog, { encoding: 'utf8' });
-    const commits = await octokit.rest.repos.listCommits({owner: context.owner, repo: context.repo});
-    const commitSHA = commits.data[0].sha;
-    await pushFile(changelog)
+    await pushUpdatedFile(changelog, data.sha)
 }
 
 function updateUpperSection(changelog) {
