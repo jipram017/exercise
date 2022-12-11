@@ -9,7 +9,7 @@ const { Base64 } = require("js-base64");
 const { context = {} } = github;
 const {GITHUB_TOKEN, GITHUB_SHA} = process.env;
 const octokit = github.getOctokit(GITHUB_TOKEN);
-const changelogFilename = '../CHANGELOG.md';
+const changelogFilename = 'CHANGELOG.md';
 
 async function run() {
     const init_changelog = core.getInput("init_changelog");
