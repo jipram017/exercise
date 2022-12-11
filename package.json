@@ -18,6 +18,9 @@
   },
   "homepage": "https://github.com/jipram017/exercise#readme",
   "devDependencies": {
-    "@vercel/ncc": "^0.36.0"
+    "@actions/core": "^1.10.0",
+    "@actions/github": "^5.1.1",
+    "@vercel/ncc": "^0.36.0",
+    "add": "^2.0.6"
   }
 }
