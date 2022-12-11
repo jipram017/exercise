@@ -1,2 +1,2 @@
 # exercise
-My exercise with algorithm and data structure
+My exercise with algorithm and data structure programming
