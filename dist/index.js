@@ -8296,7 +8296,7 @@ async function createChangelog() {
         {encoding: 'utf8'}
     );
 
-    const githubUrl = `https://github.com/${context.payload.repository.owner}/${context.payload.repository.name}/compare/v1.0.0...HEAD`;
+    const githubUrl = `https://github.com/${context.payload.repository.owner.login}/${context.payload.repository.name}/compare/v1.0.0...HEAD`;
     console.log(githubUrl)
     changelog = changelog.replace('[Unreleased]:', `[Unreleased]: ${githubUrl}`);
     pushNewFile(changelog).then(
