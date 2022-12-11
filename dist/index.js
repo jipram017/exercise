@@ -8296,13 +8296,7 @@ async function createChangelog() {
         {encoding: 'utf8'}
     );
 
-    const response = await octokit.rest.repos.getLatestRelease({
-        ...context.owner,
-        ...context.repo
-    });
-    console.log(response)
-    let version = response?.data?.tag_name || 'v1.0.0'
-    const githubUrl = context.repo.concat(`/compare/${version}...HEAD`);
+    const githubUrl = context.repo.concat(`/compare/v1.0.0...HEAD`);
     console.log(githubUrl)
     changelog = changelog.replace('[Unreleased]:', `[Unreleased]: ${githubUrl}`);
     pushNewFile(changelog).then(
