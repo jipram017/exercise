@@ -10014,14 +10014,14 @@ const init_changelog = core.getInput("init_changelog");
 console.log(init_changelog)
 
 async function run() {
-    if (init_changelog) {
+  /*  if (init_changelog) {
         console.log("new")
-        await newChangelog();
+        newChangelog().then(r => "completed");
     }
     else {
-        console.log("update")
+        console.log("update")*/
         await updateChangelog();
-    }
+    //}
     await createReleaseTag();
 }
 
@@ -10093,7 +10093,7 @@ function getRepositoryUrl(repository, version) {
 }
 
 async function updateChangelog() {
-    const data = await octokit.rest.request( 'GET /repos/{owner}/{repo}/contens/{path}{?ref}', {
+    const data = await octokit.rest.repos.getContent(  {
         ...context.owner,
         ...context.repo,
         path: changelogFilename

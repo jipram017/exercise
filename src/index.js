@@ -95,7 +95,7 @@ function getRepositoryUrl(repository, version) {
 }
 
 async function updateChangelog() {
-    const data = await octokit.rest.request( 'GET /repos/{owner}/{repo}/contens/{path}{?ref}', {
+    const data = await octokit.rest.repos.getContent(  {
         ...context.owner,
         ...context.repo,
         path: changelogFilename
