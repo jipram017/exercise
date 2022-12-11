@@ -1,2 +1,2 @@
 [Unreleased]
-- Added github workflow to create tag
+- Added git workflow to create / update tag
