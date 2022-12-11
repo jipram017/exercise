@@ -38,24 +38,24 @@ async function createReleaseTag(){
 }
 
 async function pushFile(changelog) {
-    try {
+    try{
         const contentEncoded = Base64.encode(changelog);
-        const {data} = await octokit.rest.repos.createOrUpdateFileContents({
-            owner: context.owner,
-            repo: context.repo,
-            path: changelogFilename,
-            message: "Added CHANGELOG.md file",
-            content: contentEncoded,
-            committer: {
-                name: "committer",
-                email: "email",
-            },
-            author: {
-                name: "author",
-                email: "email",
-            },
-        });
-        console.log(data);
+        const { data } = await octokit.repos.createOrUpdateFileContents({
+        owner: 'jipram017',
+        repo: 'exercise',
+        path: 'CHANGELOG.md',
+        message: 'Added CHANGELOG.md file',
+        content: contentEncoded,
+        committer: {
+            name: `Aji Pramono`,
+            email: 'pprmno@gmail.com',
+        },
+        author: {
+            name: `Aji Pramono`,
+            email: 'pprmno@gmail.com',
+        },
+    });
+    console.log(data);
     } catch (err) {
         console.error(err);
     }
