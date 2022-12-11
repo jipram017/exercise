@@ -9688,7 +9688,7 @@ const core = __nccwpck_require__(2186);
 const github = __nccwpck_require__(5438);
 
 async function run() {
-    const TAG_NAME = core.getInput("TAG_NAME");
+    const TAG_NAME = core.getInput("tag_name");
     const {GITHUB_TOKEN, GITHUB_SHA} = process.env;
     const octokit = github.getOctokit(GITHUB_TOKEN);
     const { context = {} } = github;
