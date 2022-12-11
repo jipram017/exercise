@@ -10,6 +10,8 @@ const { context = {} } = github;
 const {GITHUB_TOKEN, GITHUB_SHA} = process.env;
 const octokit = github.getOctokit(GITHUB_TOKEN);
 const changelogFilename = 'CHANGELOG.md';
+const changelogAddMessage = 'Added CHANGELOG.md file';
+const changelogUpdateMessage = 'Updated CHANGELOG.md file';
 
 async function run() {
     const init_changelog = core.getInput("init_changelog");
@@ -38,21 +40,21 @@ async function createReleaseTag(){
 }
 
 async function pushFile(changelog) {
+    const contentEncoded = Base64.encode(changelog);
     try{
-        const contentEncoded = Base64.encode(changelog);
         const { data } = await octokit.rest.repos.createOrUpdateFileContents({
-        owner: 'jipram017',
-        repo: 'exercise',
-        path: 'CHANGELOG.md',
-        message: 'Added CHANGELOG.md file',
+        owner: context.owner,
+        repo: context.repo,
+        path: changelogFilename,
+        message: changelogAddMessage,
         content: contentEncoded,
         committer: {
-            name: `Aji Pramono`,
-            email: 'pprmno@gmail.com',
+            name: context.name,
+            email: context.email,
         },
         author: {
-            name: `Aji Pramono`,
-            email: 'pprmno@gmail.com',
+            name: context.name,
+            email: context.email,
         },
     });
     console.log(data);
