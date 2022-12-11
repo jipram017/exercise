@@ -16,7 +16,7 @@ async function run() {
     console.log(pull_request)
     const pull_request_title = context.payload.pull_request.title
     console.log(pull_request_title)
-    const regex = /\[#\s*Release\]\s*v(.+)/i;
+    const regex = /(\#\s*Release)\s*v(.+)/
     const matches =  pull_request_title.match(regex);
     console.log(matches)
     const latest_version = matches?.matches[1];
