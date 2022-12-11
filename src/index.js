@@ -41,7 +41,13 @@ function newChangelog() {
     const { version, repository } = JSON.parse(fs.readFileSync(require.resolve("../package.json"), { encoding: 'utf8' }));
     changelog = changelog.replace('[Unreleased]:', `[Unreleased]: ${getRepositoryUrl(repository, version)}`);
     console.log(changelog)
-    fs.writeFile(require('path').join(__dirname, '../CHANGELOG.md'), changelog, null);
+    fs.writeFile(require('path').join(__dirname, '../CHANGELOG.md'), changelog, function(error) {
+        if(error) {
+            console.log('[write auth]: ' + err);
+        } else {
+            console.log('[write auth]: success');
+        }
+    });
 }
 
 function getRepositoryUrl(repository, version) {
