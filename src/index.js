@@ -39,7 +39,7 @@ async function createReleaseTag(){
     }
 }
 
-async function pushFile(changelog) {
+async function pushNewFile(changelog) {
     const contentEncoded = Base64.encode(changelog);
     try{
         const { data } = await octokit.rest.repos.createOrUpdateFileContents({
@@ -55,12 +55,28 @@ async function pushFile(changelog) {
     }
 }
 
+async function pushUpdatedFile(changelog, sha) {
+    const contentEncoded = Base64.encode(changelog);
+    try{
+        const { data } = await octokit.rest.repos.createOrUpdateFileContents({
+            ...context.owner,
+            ...context.repo,
+            path: changelogFilename,
+            sha: sha,
+            message: changelogUpdateMessage,
+            content: contentEncoded
+        });
+        console.log(data);
+    } catch (err) {
+        console.error(err);
+    }
+}
+
 async function newChangelog() {
     let changelog = fs.readFileSync(require.resolve("../src/init.md"), {encoding: 'utf8'});
     const {version, repository} = JSON.parse(fs.readFileSync(require.resolve("../package.json"), {encoding: 'utf8'}));
     changelog = changelog.replace('[Unreleased]:', `[Unreleased]: ${getRepositoryUrl(repository, version)}`);
-    await pushFile(changelog)
-    //fs.writeFileSync('../CHANGELOG.md', changelog, {encoding: 'utf8', flag: 'wx'});
+    await pushNewFile(changelog)
 }
 
 function getRepositoryUrl(repository, version) {
@@ -72,16 +88,15 @@ function getRepositoryUrl(repository, version) {
 }
 
 async function updateChangelog() {
-    let changelog = fs.readFileSync(require.resolve("../CHANGELOG.md"), { encoding: 'utf8' });
-    console.log(changelog)
+    let changelog = octokit.rest.repos.getContent({
+        ...context.owner,
+        ...context.repo,
+        path: changelogFilename
+    })
+    let sha = changelog.sha
     changelog = updateUpperSection(changelog);
-    console.log(changelog)
     changelog = updateBottomSectionGithub(changelog);
-    console.log(changelog)
-    //fs.writeFileSync(require.resolve("../CHANGELOG.md"), changelog, { encoding: 'utf8' });
-    const commits = await octokit.rest.repos.listCommits({owner: context.owner, repo: context.repo});
-    const commitSHA = commits.data[0].sha;
-    await pushFile(changelog)
+    await pushUpdatedFile(changelog, sha)
 }
 
 function updateUpperSection(changelog) {

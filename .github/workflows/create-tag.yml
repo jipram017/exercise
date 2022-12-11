@@ -19,7 +19,7 @@ jobs:
         uses: ./
         with:
           tag_name: 3.0.0
-          init_changelog: true
+          init_changelog: false
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           GITHUB_SHA: ${{secrets.GITHUB_SHA}}
