@@ -39,7 +39,7 @@ function newChangelog() {
     let changelog = fs.readFileSync(require.resolve("../src/init.md"), {encoding: 'utf8'});
     const { version, repository } = JSON.parse(fs.readFileSync(require.resolve("../package.json"), { encoding: 'utf8' }));
     changelog = changelog.replace('[Unreleased]:', `[Unreleased]: ${getRepositoryUrl(repository, version)}`);
-    fs.writeFileSync(require.resolve("../CHANGELOG.md"), changelog, {encoding: 'utf8', flag: 'wx'});
+    fs.writeFileSync('../CHANGELOG.md', changelog, {encoding: 'utf8', flag: 'wx'});
 }
 
 function getRepositoryUrl(repository, version) {
