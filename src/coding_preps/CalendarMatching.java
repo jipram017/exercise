@@ -128,6 +128,7 @@ public class CalendarMatching {
 	}
 	
 	public static void main(String[] args) {
+		
 		List<String[]> calendarA = new ArrayList<String[]>();
 		calendarA.add(new String[] {"9:00", "10:30"});
 		calendarA.add(new String[] {"12:00", "13:00"});
