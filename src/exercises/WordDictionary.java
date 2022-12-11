@@ -9,7 +9,6 @@ public class WordDictionary {
 			arr = new TrieNode[26];
 		}
 	}
-	
 	public static TrieNode root;
 	
     /** Initialize your data structure here. */
