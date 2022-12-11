@@ -10010,11 +10010,18 @@ const octokit = github.getOctokit(GITHUB_TOKEN);
 const changelogFilename = 'CHANGELOG.md';
 const changelogAddMessage = 'Added CHANGELOG.md file';
 const changelogUpdateMessage = 'Updated CHANGELOG.md file';
+const init_changelog = core.getInput("init_changelog");
+console.log(init_changelog)
 
 async function run() {
-    const init_changelog = core.getInput("init_changelog");
-    if (init_changelog) {await newChangelog();}
-    else {await updateChangelog();}
+    if (init_changelog) {
+        console.log("new")
+        await newChangelog();
+    }
+    else {
+        console.log("update")
+        await updateChangelog();
+    }
     await createReleaseTag();
 }
 
