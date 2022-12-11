@@ -63,10 +63,8 @@ async function pushNewFile(changelog) {
 }
 
 async function updateChangelog(content, version, sha) {
-    const contentDecoded = Base64.decode(content);
-    console.log(contentDecoded)
-    let changelog = updateUpperSection(contentDecoded, version);
-    console.log(changelog)
+    let changelog = Base64.decode(content);
+    changelog = updateUpperSection(changelog, version);
     changelog = updateBottomSection(changelog, version);
     console.log(changelog)
     pushUpdatedFile(changelog, sha).then(
@@ -88,12 +86,12 @@ async function pushUpdatedFile(changelog, sha) {
     return response?.status || 500;
 }
 
-async function updateUpperSection(changelog, version) {
+function updateUpperSection(changelog, version) {
     changelog = changelog.replace(/## \[Unreleased\]/, `## [Unreleased]\n\n## [v${version}] - ${date}`);
     return changelog;
 }
 
-async function updateBottomSection(changelog, version) {
+function updateBottomSection(changelog, version) {
     const regex = /\[Unreleased\]:(.+\/)v(.+)\.\.\.HEAD/i;
     const matches = changelog.match(regex);
     console.log(matches)
