@@ -4,7 +4,7 @@ import helper.DataStructure.ListNode;
 
 public class LinkedListNodeDeletion {
 	
-	// Delete node from a linked list (except tail) given access only to that node
+    // Delete node from a linked list (except tail) given access only to that node
     public static void deleteNode(ListNode node) {
         ListNode nxt = node.next;
         if(nxt != null) {
