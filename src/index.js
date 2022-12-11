@@ -37,8 +37,10 @@ async function createReleaseTag(){
 
 function newChangelog() {
     let changelog = fs.readFileSync(require.resolve("../src/init.md"), {encoding: 'utf8'});
+    console.log(changelog)
     const { version, repository } = JSON.parse(fs.readFileSync(require.resolve("../package.json"), { encoding: 'utf8' }));
     changelog = changelog.replace('[Unreleased]:', `[Unreleased]: ${getRepositoryUrl(repository, version)}`);
+    console.log(changelog)
     fs.writeFileSync('../CHANGELOG.md', changelog, {encoding: 'utf8', flag: 'wx'});
 }
 
