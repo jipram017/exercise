@@ -6,4 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-[Unreleased]: https://github.com/jipram017/exercise/compare/v1.0.0...HEAD
+## [undefined] - 2022-12-11
+
+[Unreleased]: https://github.com/jipram017/exercise/compare/vundefined...HEAD
+[undefined]: https://github.com/jipram017/exercise/compare/v1.0.0...vundefined
