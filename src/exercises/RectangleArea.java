@@ -21,5 +21,4 @@ public class RectangleArea {
 		// TODO Auto-generated method stub
 
 	}
-
 }
