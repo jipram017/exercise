@@ -6,6 +6,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 - Fix implementation for updating changelog versioning
-- Some code cleanup 
+- Some code cleanup and refactoring
 
 [Unreleased]: https://github.com/jipram017/exercise/compare/v1.0.0...HEAD
