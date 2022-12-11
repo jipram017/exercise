@@ -8267,7 +8267,8 @@ const changelogAddMessage = 'Added CHANGELOG.md file';
 const changelogUpdateMessage = 'Updated CHANGELOG.md file';
 
 async function run() {
-    const pull_request_title = context.payload.title;
+    const pull_request_title = context.event.pull_request.title;
+    console.log(pull_request_title)
     const regex = /#Release v([A-Za-z0-9]+(\.[A-Za-z0-9]+)+)\./i;
     const matches =  pull_request_title.match(regex);
     console.log(matches)
