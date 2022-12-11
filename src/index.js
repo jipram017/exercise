@@ -62,9 +62,9 @@ async function pushUpdatedFile(changelog, sha) {
             ...context.owner,
             ...context.repo,
             path: changelogFilename,
-            sha: sha,
             message: changelogUpdateMessage,
-            content: contentEncoded
+            content: contentEncoded,
+            sha: sha
         });
         console.log(data);
     } catch (err) {
@@ -93,6 +93,7 @@ async function updateChangelog() {
         ...context.repo,
         path: changelogFilename
     });
+    console.log(sha)
     let changelog = fs.readFileSync(require.resolve("../CHANGELOG.md"), {encoding: 'utf8'});
     changelog = updateUpperSection(changelog);
     changelog = updateBottomSectionGithub(changelog);
