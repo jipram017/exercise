@@ -1,4 +1,4 @@
-name: create tag
+name: create_tag
 on:
   pull_request:
     branches:
