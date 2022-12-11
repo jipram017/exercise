@@ -54,8 +54,7 @@ public class LCS {
 			}
             flag ^= 1;
 		}
-		
-		
+
 		// Printing longest common subsequence
 		int index = dp[m][n];
 		
@@ -87,7 +86,6 @@ public class LCS {
 		String array2 = "GXTXAYB";
 		//String[][] result = LCS(array1, array2);
 		//System.out.println(LCS(array1,array2));
-		
 		System.out.println(nonOptimizedLCS(array1,array2));
 	}
 
