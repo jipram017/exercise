@@ -2,7 +2,7 @@ package exercises;
 
 public class FindDuplicate {
 	
-	// Time complexity O(N), space complexity O(1)
+    // Time complexity O(N), space complexity O(1)
     public int findDuplicate(int[] nums) {
         int slow = 0;
         int fast = 0;
