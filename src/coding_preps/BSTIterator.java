@@ -1,13 +1,13 @@
 package coding_preps;
 
-import java.util.Stack;
+import helper.DataStructure;
 
-import helper.DataStructure.TreeNode;
+import java.util.Stack;
 
 /** LeetCode #173 **/
 public class BSTIterator {
-	static Stack<TreeNode> s = new Stack<TreeNode>();
-	public BSTIterator(TreeNode root) {
+	static Stack<DataStructure.TreeNode> s = new Stack<DataStructure.TreeNode>();
+	public BSTIterator(DataStructure.TreeNode root) {
 		while(root != null) {
 			s.push(root);
 			root = root.left;
@@ -19,7 +19,7 @@ public class BSTIterator {
 	}
 	
 	public static int next() {
-		TreeNode node = s.pop();
+		DataStructure.TreeNode node = s.pop();
 		int value = node.val;
 		if(node.right != null) {
 			node = node.right;

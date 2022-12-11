@@ -1,14 +1,15 @@
 package coding_preps;
 
-import helper.DataStructure.TreeNode;
+import helper.DataStructure;
 
 /** LeetCode #701 **/
 public class BSTNodeInsertion {
+
 	// Time complexity O(h)
 	// Space complexity O(h) where h is height of BST
-    public static TreeNode insertIntoBST(TreeNode root, int val) {
+    public static DataStructure.TreeNode insertIntoBST(DataStructure.TreeNode root, int val) {
         if(root==null) {
-        	TreeNode node = new TreeNode(val);
+        	DataStructure.TreeNode node = new DataStructure.TreeNode(val);
         	return node;
         }
         

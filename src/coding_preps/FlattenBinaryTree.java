@@ -4,7 +4,6 @@ import helper.DataStructure.TreeNode;
 
 /** LeetCode #114 **/
 public class FlattenBinaryTree {
-	
 	// This approach does not use additional data structure
 	// Time complexity O(N)
 	// Space complexity O(NlogN)
