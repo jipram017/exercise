@@ -3,7 +3,6 @@ package exercise;
 import java.util.HashMap;
 import exercise.FlattenBinaryTree.TreeNode;
 
-
 // Construct Binary Tree Given Preorder and Inorder Array
 public class ConstructBinaryTreeI {
 	
