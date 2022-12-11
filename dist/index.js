@@ -10099,14 +10099,21 @@ async function updateChangelog() {
         path: changelogFilename
     });
 
-    var obj = JSON.parse(data);
-    console.log(obj)
-    console(obj.sha);
+    const modObj = data.map(item => {
+        for (let prop in item) {
+            if(typeof item[prop] === 'object' && !Array.isArray(item[prop])) {
+                item[prop] = JSON.stringify(item[prop])
+            }
+        }
+        return item;
+    })
+
+    console.log({ modObj })
 
     let changelog = fs.readFileSync(__nccwpck_require__.ab + "CHANGELOG.md", {encoding: 'utf8'});
     changelog = updateUpperSection(changelog);
     changelog = updateBottomSectionGithub(changelog);
-    await pushUpdatedFile(changelog, obj.sha);
+    await pushUpdatedFile(changelog, modObj.sha);
 }
 
 function updateUpperSection(changelog) {
