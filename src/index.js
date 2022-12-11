@@ -100,11 +100,15 @@ async function updateChangelog() {
         ...context.repo,
         path: changelogFilename
     });
-    console.log(data['sha'])
+
+    var obj = JSON.parse(data);
+    console.log(obj)
+    console(obj.sha);
+
     let changelog = fs.readFileSync(require.resolve("../CHANGELOG.md"), {encoding: 'utf8'});
     changelog = updateUpperSection(changelog);
     changelog = updateBottomSectionGithub(changelog);
-    await pushUpdatedFile(changelog, data['sha']);
+    await pushUpdatedFile(changelog, obj.sha);
 }
 
 function updateUpperSection(changelog) {
