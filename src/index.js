@@ -101,10 +101,11 @@ async function updateChangelog() {
         path: changelogFilename
     });
     console.log(data)
+    console.log(data["sha"])
     let changelog = fs.readFileSync(require.resolve("../CHANGELOG.md"), {encoding: 'utf8'});
     changelog = updateUpperSection(changelog);
     changelog = updateBottomSectionGithub(changelog);
-    await pushUpdatedFile(changelog, JSON.parse(JSON.stringify(data)).sha);
+    await pushUpdatedFile(changelog, data["sha"]);
 }
 
 function updateUpperSection(changelog) {
