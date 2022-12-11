@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 // Time complexity : O(c1+c2) where c1 = length of first list and c2 = length of second list
 // Space complexity: O(c1+c2) since we have a merged of two lists
 public class CalendarMatching {
