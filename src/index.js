@@ -12,32 +12,25 @@ const changelogAddMessage = 'Added CHANGELOG.md file';
 const changelogUpdateMessage = 'Updated CHANGELOG.md file';
 
 async function run() {
-    const pull_request = context.payload.pull_request
-    console.log(pull_request)
     const pull_request_title = context.payload.pull_request.title
-    console.log(pull_request_title)
     const regex = /(\#\s*Release)\s*v(.+)/
     const matches =  pull_request_title.match(regex);
-    console.log(matches)
     let latest_version
     if(matches) latest_version = matches[2];
-    console.log(latest_version)
 
-    const response = await octokit.rest.repos.getContent(  {
-        ...context.owner,
-        ...context.repo,
-        path: changelogFilename
-    });
-    console.log(response)
-    const status = response?.status
-    const latest_content = response?.data?.content
-    const sha = response?.data?.sha;
-
-    if(status != 200){
-        await createChangelog()
-    }
-    else if(latest_content != null){
+    try {
+        const response = await octokit.rest.repos.getContent(  {
+            ...context.owner,
+            ...context.repo,
+            path: changelogFilename
+        });
+        console.log(response)
+        const latest_content = response?.data?.content
+        const sha = response?.data?.sha;
         await updateChangelog(latest_content, latest_version, sha);
+    } catch(err) {
+        console.error(err)
+        await createChangelog()
     }
     await createReleaseTag(latest_version);
 }
