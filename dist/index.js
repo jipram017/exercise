@@ -9722,8 +9722,11 @@ async function createReleaseTag(){
 
 function updateChangelog() {
     let changelog = fs.readFileSync(__nccwpck_require__.ab + "CHANGELOG.md", { encoding: 'utf8' });
+    console.log(changelog)
     changelog = updateUpperSection(changelog);
+    console.log(changelog)
     changelog = updateBottomSectionGithub(changelog);
+    console.log(changelog)
     fs.writeFileSync(__nccwpck_require__.ab + "CHANGELOG.md", changelog, { encoding: 'utf8' });
 }
 

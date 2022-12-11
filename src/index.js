@@ -35,8 +35,11 @@ async function createReleaseTag(){
 
 function updateChangelog() {
     let changelog = fs.readFileSync(require.resolve("../CHANGELOG.md"), { encoding: 'utf8' });
+    console.log(changelog)
     changelog = updateUpperSection(changelog);
+    console.log(changelog)
     changelog = updateBottomSectionGithub(changelog);
+    console.log(changelog)
     fs.writeFileSync(require.resolve("../CHANGELOG.md"), changelog, { encoding: 'utf8' });
 }
 
