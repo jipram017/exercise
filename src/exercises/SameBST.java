@@ -1,7 +1,6 @@
 package exercises;
 
 public class SameBST {
-	
 	// Time complexity O(n^2)
 	// Space complexity O(d) where d is depth of BST
 	public static boolean areSameBSTs(int[]array1, int[]array2) {
