@@ -3,8 +3,8 @@ package exercise;
 import exercise.FlattenBinaryTree.TreeNode;
 
 public class BSTFromPreorder {
-	// Construct BST from Preorder Array
-	int index = 0;
+    // Construct BST from Preorder Array
+    int index = 0;
     public TreeNode bstFromPreorder(int[] preorder) {
         if(preorder == null || preorder.length == 0) return null;
         return buildBSTHelper(preorder, Integer.MIN_VALUE, Integer.MAX_VALUE);
