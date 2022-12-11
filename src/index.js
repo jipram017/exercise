@@ -16,14 +16,14 @@ const init_changelog = core.getInput("init_changelog");
 console.log(init_changelog)
 
 async function run() {
-    if (init_changelog) {
+  /*  if (init_changelog) {
         console.log("new")
-        await newChangelog();
+        newChangelog().then(r => "completed");
     }
     else {
-        console.log("update")
+        console.log("update")*/
         await updateChangelog();
-    }
+    //}
     await createReleaseTag();
 }
 
