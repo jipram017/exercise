@@ -104,7 +104,7 @@ async function updateChangelog() {
     let changelog = fs.readFileSync(require.resolve("../CHANGELOG.md"), {encoding: 'utf8'});
     changelog = updateUpperSection(changelog);
     changelog = updateBottomSectionGithub(changelog);
-    await pushUpdatedFile(changelog, JSON.parse(data).sha);
+    await pushUpdatedFile(changelog, JSON.parse(JSON.stringify(data)).sha);
 }
 
 function updateUpperSection(changelog) {
