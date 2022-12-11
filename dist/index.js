@@ -9692,7 +9692,7 @@ const github = __nccwpck_require__(5438);
 const fs = __nccwpck_require__(7147);
 const date = new Date().toISOString().slice(0, 10);
 const version = process.env.npm_package_version;
-const changelogFilename = 'CHANGELOG.md';
+const changelogFilename = '../CHANGELOG.md';
 
 async function run() {
     updateChangelog();

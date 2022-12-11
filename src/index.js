@@ -5,7 +5,7 @@ const github = require('@actions/github');
 const fs = require('fs');
 const date = new Date().toISOString().slice(0, 10);
 const version = process.env.npm_package_version;
-const changelogFilename = 'CHANGELOG.md';
+const changelogFilename = '../CHANGELOG.md';
 
 async function run() {
     updateChangelog();
