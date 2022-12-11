@@ -3,7 +3,6 @@ package exercises;
 import java.util.Arrays;
 
 public class PerfectSquare {
-	
 	// Time complexity O(n^3/2)
 	// Space complexity O(n)
     public static int numSquares(int n) {
