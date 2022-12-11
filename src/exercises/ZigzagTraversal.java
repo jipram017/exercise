@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ZigzagTraversal {
-	
 	// Time complexity O(N) because we iterate over 2D arrays with N elements
 	// Space complexity O(N) because we store the result into a list of size N
 	public static List<Integer> traverse(List<List<Integer>> arr) {
