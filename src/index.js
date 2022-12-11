@@ -49,12 +49,12 @@ async function pushFile(changelog) {
         message: changelogAddMessage,
         content: contentEncoded,
         committer: {
-            ...context.owner.name,
-            ...context.owner.email,
+            ...context.name,
+            ...context.email,
         },
         author: {
-            ...context.owner.name,
-            ...context.owner.email,
+            ...context.name,
+            ...context.email,
         },
     });
     console.log(data);
