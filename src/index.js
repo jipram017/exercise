@@ -87,7 +87,7 @@ async function pushUpdatedFile(changelog, sha) {
 }
 
 function updateUpperSection(changelog, version) {
-    changelog = changelog.replace(/## \[Unreleased\]/, `## [Unreleased]\n\n## [v${version}] - ${date}`);
+    changelog = changelog.replace(/## \[Unreleased\]/, `## [Unreleased]\n\n## [${version}] - ${date}`);
     return changelog;
 }
 
