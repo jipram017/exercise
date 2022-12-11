@@ -5,10 +5,12 @@ const github = require('@actions/github');
 const fs = require('fs');
 const date = new Date().toISOString().slice(0, 10);
 const version = process.env.npm_package_version;
-const changelogFilename = '../CHANGELOG.md';
+const changelogFilename = 'CHANGELOG.md';
 
 async function run() {
-    updateChangelog();
+    const init_changelog = core.getInput("init_changelog");
+    if (init_changelog) {newChangelog();}
+    else {updateChangelog();}
     await createReleaseTag();
 }
 
@@ -31,6 +33,21 @@ async function createReleaseTag(){
     else {
         await octokit.rest.git.updateRef({...context.repo, ref: `tags/${TAG_NAME}`, sha: GITHUB_SHA});
     }
+}
+
+function newChangelog() {
+    let changelog = fs.readFileSync(require.resolve("../src/init.md"), {encoding: 'utf8'});
+    const { version, repository } = JSON.parse(fs.readFileSync(require.resolve("../package.json"), { encoding: 'utf8' }));
+    changelog = changelog.replace('[Unreleased]:', `[Unreleased]: ${getRepositoryUrl(repository, version)}`);
+    fs.writeFileSync(require.resolve("../CHANGELOG.md"), changelog, {encoding: 'utf8', flag: 'wx'});
+}
+
+function getRepositoryUrl(repository, version) {
+    const getGithubUrl = (name) => `https://github.com/${name}/compare/v${version}...HEAD`;
+    let type;
+    let name;
+    [, type, name] = repository.url.match(/^(?:[\w+]+?:\/\/)?(.+)(?:\/|:)([\w-]+\/[\w-]+)(?:\.git)?$/);
+    return getGithubUrl(name);
 }
 
 function updateChangelog() {
