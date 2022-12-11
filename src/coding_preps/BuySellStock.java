@@ -34,7 +34,6 @@ public class BuySellStock {
 	// O(N) time, O(N) space
 	public static int maxProfit3(int[] prices) {
 		if(prices==null || prices.length==0) return 0;
-		
 		int minimum = prices[0];
 		int[] left = new int[prices.length];
 		left[0] = 0;
