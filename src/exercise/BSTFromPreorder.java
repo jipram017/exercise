@@ -3,7 +3,6 @@ package exercise;
 import exercise.FlattenBinaryTree.TreeNode;
 
 public class BSTFromPreorder {
-	
 	// Construct BST from Preorder Array
 	int index = 0;
     public TreeNode bstFromPreorder(int[] preorder) {
