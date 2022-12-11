@@ -8271,10 +8271,10 @@ async function run() {
     console.log(pull_request)
     const pull_request_title = context.payload.pull_request.title
     console.log(pull_request_title)
-    const regex = /#Release v([A-Za-z0-9]+(\.[A-Za-z0-9]+)+)\./i;
+    const regex = /\[#\s*Release\]\s*v(.+)/i;
     const matches =  pull_request_title.match(regex);
     console.log(matches)
-    const latest_version = matches?.matches[2];
+    const latest_version = matches?.matches[1];
 
     const response = await octokit.rest.repos.getContent(  {
         ...context.owner,
@@ -8355,7 +8355,7 @@ async function pushUpdatedFile(changelog, sha) {
 }
 
 async function updateUpperSection(changelog, version) {
-    changelog = changelog.replace(/## \[Unreleased\]/, `## [Unreleased]\n\n## [${version}] - ${date}`);
+    changelog = changelog.replace(/## \[Unreleased\]/, `## [Unreleased]\n\n## [v${version}] - ${date}`);
     return changelog;
 }
 
