@@ -1,0 +1,21 @@
+name: create tag
+on:
+  pull_request:
+    branches:
+      - master
+    types: [closed]
+
+jobs:
+  create tag:
+    name: Create / update tag
+    if: ${{ github.event.pull_request.merged }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Create / update release tag
+        with:
+          TAG_NAME: 1.0.0
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_SHA: ${{secrets.GITHUB_SHA}}

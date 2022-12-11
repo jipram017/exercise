@@ -2,16 +2,34 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 
 async function run() {
-    const GITHUB_TOKEN = core.getInput('GITHUB_TOKEN');
+    const TAG_NAME = core.getInput("TAG_NAME");
+    const {GITHUB_TOKEN, GITHUB_SHA} = process.env;
     const octokit = github.getOctokit(GITHUB_TOKEN);
     const { context = {} } = github;
-    const { pull_request } = context.payload;
 
-    await octokit.rest.issues.createComment({
-        ...context.repo,
-        issue_number: pull_request.number,
-        body: 'Thank you for submitting a pull request! We will try to review this as soon as we can.'
-    });
+    if (!(GITHUB_SHA || GITHUB_TOKEN || TAG_NAME)) {
+        core.setFailed("Missing GITHUB_SHA/GITHUB_TOKEN/TAG_NAME");
+        return;
+    }
+
+    let ref;
+    try {
+        ref = await octokit.rest.git.getRef(
+            {...context.repo, ref: `tags/${TAG_NAME}`}
+        );
+    } catch (e) {
+        if (e.status === 404) {}
+        else { throw e;}
+    }
+    if (!ref) {
+        await octokit.rest.git.createRef(
+            {...context.repo, ref: `refs/tags/${TAG_NAME}`, sha: GITHUB_SHA}
+        );
+    } else {
+        await octokit.rest.git.updateRef(
+            {...context.repo, ref: `tags/${TAG_NAME}`, sha: GITHUB_SHA}
+        );
+    }
 }
 
 run();
