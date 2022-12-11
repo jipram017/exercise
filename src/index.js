@@ -43,18 +43,18 @@ async function pushFile(changelog) {
     const contentEncoded = Base64.encode(changelog);
     try{
         const { data } = await octokit.rest.repos.createOrUpdateFileContents({
-        owner: context.owner,
-        repo: context.repo,
+        ...context.owner,
+        ...context.repo,
         path: changelogFilename,
         message: changelogAddMessage,
         content: contentEncoded,
         committer: {
-            name: context.name,
-            email: context.email,
+            ...context.owner.name,
+            ...context.owner.email,
         },
         author: {
-            name: context.name,
-            email: context.email,
+            ...context.owner.name,
+            ...context.owner.email,
         },
     });
     console.log(data);
