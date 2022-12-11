@@ -1,5 +1,4 @@
 package coding_preps;
-
 import java.util.Arrays;
 
 /** LeetCode #698 **/
